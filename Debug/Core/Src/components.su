@@ -1,0 +1,2 @@
+../Core/Src/components.c:8:6:enterCriticalSection	4	static,ignoring_inline_asm
+../Core/Src/components.c:12:6:exitCriticalSection	4	static,ignoring_inline_asm

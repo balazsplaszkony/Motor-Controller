@@ -1,0 +1,4 @@
+../Core/Src/timer.c:13:6:InitTimer	16	static
+../Core/Src/timer.c:35:6:TIM7_IRQHandler	8	static
+../Core/Src/timer.c:42:6:TimerHandler	16	static
+../Core/Src/timer.c:64:6:HAL_TIM_PeriodElapsedCallback	16	static

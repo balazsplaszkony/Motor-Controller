@@ -1,0 +1,2 @@
+components.c:8:6:enterCriticalSection	1
+components.c:12:6:exitCriticalSection	1

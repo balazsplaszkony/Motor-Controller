@@ -1,0 +1,2 @@
+../Core/Src/encoder.c:14:6:InitQEP	48	static
+../Core/Src/encoder.c:57:10:GetQEPValue	40	static

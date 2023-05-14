@@ -1,0 +1,4 @@
+display.c:13:6:GetDigits	1
+display.c:21:9:convertTo7Segment	11
+display.c:62:6:DisplayValue	2
+display.c:73:6:EnableDisplays	1

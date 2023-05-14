@@ -1,0 +1,5 @@
+spi.c:30:6:MX_SPI2_Init	2
+spi.c:62:6:HAL_SPI_MspInit	2
+spi.c:103:6:HAL_SPI_MspDeInit	2
+spi.c:131:6:SPI_EnableChip	1
+spi.c:136:19:SPI_SEND	1

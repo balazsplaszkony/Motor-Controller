@@ -1,0 +1,7 @@
+characteristic.c:12:6:CharacteristicInit	1
+characteristic.c:25:6:SetCharacteristic	1
+characteristic.c:41:10:GetTotalTime	1
+characteristic.c:45:10:GetDeltaRising	1
+characteristic.c:50:10:GetDeltaFalling	1
+characteristic.c:55:6:isCharacteristicUpdated	2
+characteristic.c:64:10:CalculateSetPoint	7
