@@ -39,6 +39,10 @@ USB_DEVICE/App/usbd_cdc_if.o: ../USB_DEVICE/App/usbd_cdc_if.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
+ ../Core/Inc/compontents.h ../Core/Inc/PID.h ../Core/Inc/characteristic.h \
+ ../Core/Inc/display.h ../Core/Inc/spi.h ../Core/Inc/main.h \
+ ../Core/Inc/encoder.h ../Core/Inc/motor.h \
+ ../Drivers/CMSIS/Include/cmsis_gcc.h ../Core/Inc/timer.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
@@ -83,6 +87,16 @@ USB_DEVICE/App/usbd_cdc_if.o: ../USB_DEVICE/App/usbd_cdc_if.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
+../Core/Inc/compontents.h:
+../Core/Inc/PID.h:
+../Core/Inc/characteristic.h:
+../Core/Inc/display.h:
+../Core/Inc/spi.h:
+../Core/Inc/main.h:
+../Core/Inc/encoder.h:
+../Core/Inc/motor.h:
+../Drivers/CMSIS/Include/cmsis_gcc.h:
+../Core/Inc/timer.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:

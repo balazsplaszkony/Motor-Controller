@@ -1,4 +1,4 @@
 ../Core/Src/display.c:13:6:GetDigits	16	static
-../Core/Src/display.c:21:9:convertTo7Segment	16	static
-../Core/Src/display.c:62:6:DisplayValue	16	static
-../Core/Src/display.c:73:6:EnableDisplays	16	static
+../Core/Src/display.c:22:9:convertTo7Segment	16	static
+../Core/Src/display.c:63:6:DisplayValue	16	static
+../Core/Src/display.c:74:6:EnableDisplays	16	static

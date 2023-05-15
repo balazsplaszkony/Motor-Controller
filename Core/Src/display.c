@@ -13,8 +13,9 @@ volatile uint8_t Digits[2];
 void GetDigits(uint8_t number)
 {
 	enterCriticalSection();
-	Digits[0] = convertTo7Segment((number / 10));
-    Digits[1] = convertTo7Segment((number % 10));
+
+    Digits[0] = convertTo7Segment((number % 10));
+	Digits[1] = convertTo7Segment((number / 10));
     exitCriticalSection();
 }
 

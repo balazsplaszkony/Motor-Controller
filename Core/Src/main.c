@@ -104,8 +104,10 @@ int main(void)
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+  EnableDisplays(true);
 
-  DisplayValue(88);
+
+  //DisplayValue(88);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,32 +117,31 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  static bool a = true;
+	  static int i = 0;
 
-	  a = !a;
 //	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_RESET)
 //	  {
 //		  a = !a;
 //		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
 //		  EnableDisplays(a);
 //	  }
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, a);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, a);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, a);
-	  EnableDisplays(a);
+	  DisplayValue(i);
+
+	  i++;
+	  i = i % 100;
 
 
-	  void ProcessReceivedData(void)
-	  {
-	    // Iterate over the received data in the buffer
-	    for (uint32_t i = 0; i < BUFFER_SIZE; i++)
-	    {
-
-	      // Process the received data
-	      uint8_t data = rxBuffer[i];
-	      // ...
-	    }
-	  }
+//	  void ProcessReceivedData(void)
+//	  {
+//	    // Iterate over the received data in the buffer
+//	    for (uint32_t i = 0; i < BUFFER_SIZE; i++)
+//	    {
+//
+//	      // Process the received data
+//	      uint8_t data = rxBuffer[i];
+//	      // ...
+//	    }
+//	  }
 	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
