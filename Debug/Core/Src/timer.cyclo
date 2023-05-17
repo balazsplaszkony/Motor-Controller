@@ -1,4 +1,4 @@
 timer.c:13:6:InitTimer	1
-timer.c:35:6:TIM7_IRQHandler	1
-timer.c:42:6:TimerHandler	2
-timer.c:64:6:HAL_TIM_PeriodElapsedCallback	2
+timer.c:37:6:TIM7_IRQHandler	1
+timer.c:44:6:TimerHandler	3
+timer.c:80:6:HAL_TIM_PeriodElapsedCallback	2

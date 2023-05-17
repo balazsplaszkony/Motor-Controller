@@ -14,7 +14,7 @@ TIM_HandleTypeDef Tim1Handle;
 void InitQEP()
 {
 	// APB1: 84 MHz (TIMx: 168 MHz)
-	__TIM3_CLK_ENABLE();
+	__TIM1_CLK_ENABLE();
 
 	// Timer3 konfigurációja enkóder módban
 

@@ -1,4 +1,4 @@
-display.c:13:6:GetDigits	1
-display.c:22:9:convertTo7Segment	11
-display.c:63:6:DisplayValue	2
-display.c:74:6:EnableDisplays	1
+display.c:13:6:GetDigits	2
+display.c:25:9:convertTo7Segment	11
+display.c:66:6:DisplayValue	2
+display.c:76:6:EnableDisplays	1

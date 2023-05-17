@@ -99,11 +99,12 @@ int main(void)
 
   InitAF();
   //InitTimer();
-  //InitMotorPWM();
-  //InitQEP();
+  InitMotorPWM();
+  InitQEP();
+  SetPWM(0);
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
   EnableDisplays(true);
 
 
@@ -119,12 +120,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  static int i = 0;
 
-//	  if(HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_RESET)
-//	  {
-//		  a = !a;
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
-//		  EnableDisplays(a);
-//	  }
 	  DisplayValue(i);
 
 	  i++;

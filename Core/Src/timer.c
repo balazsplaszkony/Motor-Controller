@@ -24,8 +24,10 @@ void InitTimer()
 	Tim7Handle.State = HAL_TIM_STATE_RESET;
 
 	HAL_TIM_Base_Init(&Tim7Handle);
+	//HAL_TIM_Base_Start(&Tim7Handle);
 
-	HAL_NVIC_SetPriority(TIM7_IRQn, 3, 3);
+
+	HAL_NVIC_SetPriority(TIM7_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(TIM7_IRQn);
 
 	HAL_TIM_Base_Start_IT(&Tim7Handle);
@@ -41,17 +43,31 @@ void TIM7_IRQHandler(void)
 
 void TimerHandler()
 {
-	if(isCharacteristicUpdated())
+	int32_t measurement = GetQEPValue();
+
+	if(isCharacteristicUpdated())//ez itt nem jó, inkább vizsáljuk majd jött-e üzenet
 	{
-		//SetCharacteristic(max, base, rise, fall, hold);
-		PID.setpoint = CalculateSetPoint(1);
+		//if(prevbase != currentbase)
+		//itt megvan még minden adatunk, mentsük lee
+		//	elösször álljunk ba a basere
+		 //uint32_t prev_baseRPM = characteristic.baseRPM ;
+		 if((characteristic.baseRPM - measurement) > 3)
+			 PID.setpoint = characteristic.baseRPM;
+
+		 else{
+				//EZT MAJD VISSZAKELL ÍRNI KOMMENT NÉLKÜL
+				//SetCharacteristic(max, base, rise, fall, hold);
+			 //		PID.setpoint = CalculateSetPoint(1);
+		 }
+
 
 	}
 	else{
+//		if(prev_baseRPM == characteristic.baseRPM)
+//
 		PID.setpoint = CalculateSetPoint(0);
 	}
 
-	int32_t measurement = GetQEPValue();
 
 	PIDContollerUpdate(measurement);
 

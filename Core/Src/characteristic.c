@@ -20,6 +20,7 @@ void CharacteristicInit()
 	characteristic.delta_rising = 0;
 	characteristic.delta_falling = 0;
 	characteristic.updated = false;
+	characteristic.startable = false;
 }
 
 void SetCharacteristic(uint32_t max, uint32_t base, uint32_t rise, uint32_t fall, uint32_t hold)
@@ -65,6 +66,7 @@ uint32_t CalculateSetPoint(bool reset)
 {
 	static uint32_t counter = 0;
 	static uint32_t setpoint = 0;
+
 	if(reset)
 	{
 		counter = 0;
@@ -72,8 +74,15 @@ uint32_t CalculateSetPoint(bool reset)
 	}
 
 	else
-		counter = (counter + 1) % (MOTOR_TIM7_FREQ * GetTotalTime());
-
+	{
+		uint32_t totalTime = GetTotalTime();
+		 if (totalTime != 0)  // Check if totalTime is non-zero
+		 {
+	            counter = (counter + 1) % (MOTOR_TIM7_FREQ * totalTime);
+		 }
+		 else
+			 counter = 0;
+	}
 	if(counter < MOTOR_TIM7_FREQ * characteristic.rise_time)
 		setpoint += characteristic.delta_rising;
 
@@ -85,7 +94,7 @@ uint32_t CalculateSetPoint(bool reset)
 
 	else if((counter > MOTOR_TIM7_FREQ * (characteristic.rise_time + characteristic.hold_time)) &&
 			(setpoint >= characteristic.baseRPM))
-		setpoint -= characteristic.delta_falling;
+				setpoint -= characteristic.delta_falling;
 
 	return setpoint;
 }

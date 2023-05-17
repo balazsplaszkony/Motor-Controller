@@ -25,6 +25,7 @@ typedef struct Characteristic{
 	uint32_t delta_falling;
 
 	bool updated;
+	bool startable;
 }Characteristic;
 
 extern volatile Characteristic characteristic;

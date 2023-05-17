@@ -15,7 +15,7 @@ TIM_HandleTypeDef Tim3Handle;
 void InitMotorPWM()
 {
 	// APB2: 42 MHz (TIM3: 84 MHz)
-	__TIM1_CLK_ENABLE();
+	__TIM3_CLK_ENABLE();
 
 	// Timer1 konfigurációja PWM üzemmódban a ledek  alapján 21 kHz-re
 
