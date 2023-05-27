@@ -1,4 +1,4 @@
-motor.c:15:6:InitMotorPWM	1
-motor.c:52:6:SetPWM	3
-motor.c:68:6:SetMotorCh1	1
-motor.c:73:6:SetMotorCh2	1
+motor.c:16:6:InitMotorPWM	1
+motor.c:73:6:SetPWM	3
+motor.c:89:6:SetMotorCh1	1
+motor.c:94:6:SetMotorCh2	1

@@ -1,2 +1,2 @@
-../Core/Src/encoder.c:14:6:InitQEP	48	static
-../Core/Src/encoder.c:57:10:GetQEPValue	40	static
+../Core/Src/encoder.c:16:6:InitEncoder	72	static
+../Core/Src/encoder.c:85:9:HallEncoder_GetRPM	16	static

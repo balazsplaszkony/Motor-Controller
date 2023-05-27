@@ -27,6 +27,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "usbd_cdc_if.h"
+#include "usb.h"
+#include <string.h>
 
 /* USER CODE END Includes */
 
@@ -37,7 +40,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,7 +50,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+char *data = "Hello World\n";
+uint8_t buffer[64];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,6 +62,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 
 /* USER CODE END 0 */
 
@@ -93,15 +97,22 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI2_Init();
   MX_ADC1_Init();
-  MX_USB_DEVICE_Init();
   MX_TIM10_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
-  InitAF();
-  //InitTimer();
+  //InitAF();
   InitMotorPWM();
-  InitQEP();
-  SetPWM(0);
+  InitEncoder();
+  CharacteristicInit();
+  PIDInit();
+ // SetPWM(900);
+//  SetPWM(1000);
+//  SetPWM(0);
+
+
+  InitTimer();
+
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
@@ -118,12 +129,23 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  static int i = 0;
-
-	  DisplayValue(i);
-
-	  i++;
-	  i = i % 100;
+	  //CDC_Transmit_FS((uint8_t*) data, strlen(data));
+//	  HAL_Delay(1000);
+////	  if (rx_complete)
+////	      {
+////	        ProcessReceivedData(rx_buffer, rx_buffer_index);
+////	        rx_complete = 0;
+////	        rx_buffer_index = 0;
+////	      }
+//
+//	  static int i = 0;
+//
+//	  int a = HallEncoder_GetRPM();
+//	  if(i == 0)
+//		  DisplayValue(a);
+//
+//	  i++;
+//	  i = i % 100;
 
 
 //	  void ProcessReceivedData(void)
@@ -137,7 +159,7 @@ int main(void)
 //	      // ...
 //	    }
 //	  }
-	  HAL_Delay(1000);
+//	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

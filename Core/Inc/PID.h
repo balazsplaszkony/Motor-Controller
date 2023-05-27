@@ -13,10 +13,10 @@
 #include <stdint.h>
 #include "compontents.h"
 
-#define MAX_PID_OUTPUT 1000
+#define MAX_PID_OUTPUT 500
 #define MIN_PID_OUTPUT 0
 #define PID_OUTPUT_OFFSET 500
-#define MAX_RPM 86 //üresjárásban ennyi
+#define MAX_RPM 83 //üresjárásban ennyi
 
 
 typedef struct PidController{

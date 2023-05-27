@@ -10,43 +10,64 @@
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_cortex.h"
 TIM_HandleTypeDef Tim3Handle;
-
+TIM_OC_InitTypeDef sConfigOC_PWM_Channel1;
+TIM_OC_InitTypeDef sConfigOC_PWM_Channel2;
 // TIM1 inicializálása PWM üzemmódban
 void InitMotorPWM()
 {
-	// APB2: 42 MHz (TIM3: 84 MHz)
-	__TIM3_CLK_ENABLE();
+	  // Enable GPIO clocks
+	  __HAL_RCC_GPIOA_CLK_ENABLE();
+	  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-	// Timer1 konfigurációja PWM üzemmódban a ledek  alapján 21 kHz-re
+	  // Configure GPIO pins as alternate functions
+	  GPIO_InitTypeDef GPIO_InitStruct;
+	  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
 
-	// HAL_TIM_Base_Init és HAL_TIM_PWM_Init hívása a megfelelően kitöltött TIM_HandleTypeDef struktúrával
-	Tim3Handle.Instance = TIM3;
-	Tim3Handle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-	Tim3Handle.Init.CounterMode = TIM_COUNTERMODE_UP;
-	Tim3Handle.Init.Prescaler = 3;
-	Tim3Handle.Init.Period = MOTOR_D_MAX;
-	Tim3Handle.State = HAL_TIM_STATE_RESET;
+	  GPIO_InitStruct.Pin = GPIO_PIN_6;  // Example pin for channel 1
+	  GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;  // Example timer and alternate function
+	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	HAL_TIM_Base_Init(&Tim3Handle);
-	HAL_TIM_PWM_Init(&Tim3Handle);
-	TIM_OC_InitTypeDef TIM_OCInitStructure;
-	// HAL_TIM_PWM_ConfigChannel hívása a megfelelően kitöltött TIM_OC_InitTypeDef struktúrával 2 csatornára
+	  GPIO_InitStruct.Pin = GPIO_PIN_7;  // Example pin for channel 2
+	  GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;  // Example timer and alternate function
+	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	TIM_OCInitStructure.OCMode = TIM_OCMODE_PWM1;
-	TIM_OCInitStructure.Pulse = 0;
-	TIM_OCInitStructure.OCPolarity = TIM_OCPOLARITY_HIGH;
-	TIM_OCInitStructure.OCNPolarity = TIM_OCNPOLARITY_LOW;
-	TIM_OCInitStructure.OCFastMode = TIM_OCFAST_DISABLE;
-	TIM_OCInitStructure.OCIdleState = TIM_OCIDLESTATE_RESET;
-	TIM_OCInitStructure.OCNIdleState = TIM_OCNIDLESTATE_SET;
+	  // Enable timer clock
+	  __HAL_RCC_TIM3_CLK_ENABLE();
 
-	HAL_TIM_PWM_ConfigChannel(&Tim3Handle, &TIM_OCInitStructure, TIM_CHANNEL_1);
-	TIM_OCInitStructure.OCPolarity = TIM_OCPOLARITY_LOW;
-	HAL_TIM_PWM_ConfigChannel(&Tim3Handle, &TIM_OCInitStructure, TIM_CHANNEL_2);
+	  // Configure timer
+	  Tim3Handle.Instance = TIM3;  // Example timer
+	  Tim3Handle.Init.Prescaler = 3;
+	  Tim3Handle.Init.CounterMode = TIM_COUNTERMODE_UP;
+	  Tim3Handle.Init.Period = 1000;  // Example period (1kHz frequency)
+	  Tim3Handle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	  Tim3Handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+	  HAL_TIM_PWM_Init(&Tim3Handle);
 
+	  // Configure PWM channels
+	  sConfigOC_PWM_Channel1.OCMode = TIM_OCMODE_PWM1;
+	  sConfigOC_PWM_Channel1.Pulse = 500;  // Example duty cycle (50%)
+	  sConfigOC_PWM_Channel1.OCPolarity = TIM_OCPOLARITY_HIGH;
+	  sConfigOC_PWM_Channel1.OCFastMode = TIM_OCFAST_DISABLE;
+	  sConfigOC_PWM_Channel1.OCIdleState = TIM_OCIDLESTATE_RESET;
+	  sConfigOC_PWM_Channel1.OCNIdleState = TIM_OCNIDLESTATE_SET;
 
-	HAL_TIM_PWM_Start(&Tim3Handle, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&Tim3Handle, TIM_CHANNEL_2);
+	  HAL_TIM_PWM_ConfigChannel(&Tim3Handle, &sConfigOC_PWM_Channel1, TIM_CHANNEL_1);  // Example channel 1
+
+	  // Update the polarity for channel 2
+	  sConfigOC_PWM_Channel2.OCMode = TIM_OCMODE_PWM1;
+	  sConfigOC_PWM_Channel2.Pulse = 500;  // Example duty cycle (50%)
+	  sConfigOC_PWM_Channel2.OCPolarity = TIM_OCPOLARITY_LOW;
+	  sConfigOC_PWM_Channel2.OCFastMode = TIM_OCFAST_DISABLE;
+	  sConfigOC_PWM_Channel2.OCIdleState = TIM_OCIDLESTATE_RESET;
+	  sConfigOC_PWM_Channel2.OCNIdleState = TIM_OCNIDLESTATE_SET;
+
+	  HAL_TIM_PWM_ConfigChannel(&Tim3Handle, &sConfigOC_PWM_Channel2, TIM_CHANNEL_2);  // Example channel 2
+
+	  // Start PWM generation
+	  HAL_TIM_PWM_Start(&Tim3Handle, TIM_CHANNEL_1);  // Example channel 1
+	  HAL_TIM_PWM_Start(&Tim3Handle, TIM_CHANNEL_2);  // Example channel 2
 }
 
 void SetPWM(int32_t d)

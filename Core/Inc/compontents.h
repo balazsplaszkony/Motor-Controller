@@ -9,6 +9,7 @@
 #define INC_COMPONTENTS_H_
 
 #include "stm32f4xx_hal.h"
+#include <math.h>
 
 #include "PID.h"
 #include "characteristic.h"

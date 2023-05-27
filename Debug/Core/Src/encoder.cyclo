@@ -1,2 +1,2 @@
-encoder.c:14:6:InitQEP	1
-encoder.c:57:10:GetQEPValue	1
+encoder.c:16:6:InitEncoder	1
+encoder.c:85:9:HallEncoder_GetRPM	1

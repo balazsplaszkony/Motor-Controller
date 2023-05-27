@@ -101,13 +101,12 @@ void MX_GPIO_Init(void)
 GPIO_InitTypeDef  GPIO_InitStructure;
 void InitAF()
 {
-// DC-DC DRIVE VA-VB MOTOR PWM TIM1
-
+// DC-DC DRIVE A_QE-B_QE-Z_QE QEP TIM3
 GPIO_InitStructure.Pin = MOTOR_AQE_PIN | MOTOR_BQE_PIN;
 GPIO_InitStructure.Alternate = GPIO_AF1_TIM1;
 HAL_GPIO_Init(MOTOR_PWM_PORT, &GPIO_InitStructure);
 
-// DC-DC DRIVE A_QE-B_QE-Z_QE QEP TIM3
+// DC-DC DRIVE VA-VB MOTOR PWM TIM3
 GPIO_InitStructure.Pin = MOTOR_VA_PIN | MOTOR_VB_PIN;
 GPIO_InitStructure.Alternate = GPIO_AF2_TIM3;
 HAL_GPIO_Init(MOTOR_QE_PORT, &GPIO_InitStructure);

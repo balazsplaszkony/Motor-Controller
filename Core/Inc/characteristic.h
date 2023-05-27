@@ -12,7 +12,7 @@
 #include "compontents.h"
 
 #define MOTOR_TIM7_FREQ				10000		// 100 us timer IT
-
+#define PID_FREQ 10.0
 
 typedef struct Characteristic{
 	uint32_t maximum_RPM;
@@ -29,15 +29,17 @@ typedef struct Characteristic{
 }Characteristic;
 
 extern volatile Characteristic characteristic;
+extern volatile Characteristic characteristic_new;
+
 
 void CharacteristicInit();
-void SetCharacteristic(uint32_t max, uint32_t base, uint32_t rise, uint32_t fall, uint32_t hold);
+void SetCharacteristic(Characteristic* characteristic,uint32_t max, uint32_t base, uint32_t rise, uint32_t fall, uint32_t hold);
 uint32_t GetTotalTime();
 uint32_t GetDeltaRising();
 uint32_t GetDeltaFalling();
-
+bool hasNewData();
 
 bool isCharacteristicUpdated();
-uint32_t CalculateSetPoint(bool reset);
+int32_t CalculateSetPoint(bool reset);
 
 #endif /* SRC_CHARACTERISTIC_H_ */
