@@ -70,6 +70,7 @@ NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
 NVIC.SPI2_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
 NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
 NVIC.SysTick_IRQn=true\:0\:0\:true\:false\:true\:true\:true\:false
+NVIC.USART2_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
 NVIC.UsageFault_IRQn=true\:0\:0\:false\:false\:true\:true\:false\:false
 PA1.Signal=ADCx_IN1
 PA11.Mode=Device_Only

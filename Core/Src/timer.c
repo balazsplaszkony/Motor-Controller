@@ -43,10 +43,16 @@ void TIM7_IRQHandler(void)
 
 void TimerHandler()
 {
-	static int i = 0;
-	static int a = 0;
+//	static int zero_counter = 0;
+//	static int a = 0;
 	static int reset = 1;
-	static int last_measurement = 0;
+	static float last_measurement = 0.0;
+	if(isCharacteristicUpdated(&characteristic_new))
+	{
+		characteristic = characteristic_new;
+		reset = 1;
+	}
+
 //	i++;
 //	DisplayValue(i);
 //
@@ -60,18 +66,27 @@ void TimerHandler()
 //	i = i % 1000;
 
 
-	int32_t measurement = HallEncoder_GetRPM();
-	if(fabs(measurement-last_measurement) > measurement && last_measurement != 0)
+	float measurement = HallEncoder_GetRPM();
+
+	if(measurement >= -0.0001 && measurement <= 0.0001)
+	{
+		measurement = 0.0;
+		last_measurement = 0.0;
+	}
+
+	else if(fabs(measurement-last_measurement) > measurement && last_measurement != 0.0)
 		measurement = last_measurement;
+
+
 
 	DisplayValue(measurement);
 	if(reset)
 	{
-		PID.setpoint = CalculateSetPoint(reset);
+		PID.setpoint = CalculateSetPoint(reset, measurement);
 		reset = 0;
 	}
 	else{
-		PID.setpoint = CalculateSetPoint(reset);
+		PID.setpoint = CalculateSetPoint(reset, measurement);
 	}
 
 		PIDContollerUpdate(measurement);

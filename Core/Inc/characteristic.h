@@ -14,15 +14,15 @@
 #define MOTOR_TIM7_FREQ				10000		// 100 us timer IT
 #define PID_FREQ 10.0
 
-typedef struct Characteristic{
-	uint32_t maximum_RPM;
-	uint32_t baseRPM;
-	uint32_t rise_time;
-	uint32_t fall_time;
-	uint32_t hold_time;
-	uint32_t total_time;
-	uint32_t delta_rising;
-	uint32_t delta_falling;
+typedef struct Characteristic {
+	float maximum_RPM;
+	float baseRPM;
+	float rise_time;
+	float fall_time;
+	float hold_time;
+	float total_time;
+	float delta_rising;
+	float delta_falling;
 
 	bool updated;
 	bool startable;
@@ -33,13 +33,13 @@ extern volatile Characteristic characteristic_new;
 
 
 void CharacteristicInit();
-void SetCharacteristic(Characteristic* characteristic,uint32_t max, uint32_t base, uint32_t rise, uint32_t fall, uint32_t hold);
-uint32_t GetTotalTime();
-uint32_t GetDeltaRising();
-uint32_t GetDeltaFalling();
+void SetCharacteristic(Characteristic* characteristic, uint32_t max, uint32_t base, uint32_t rise, uint32_t fall, uint32_t hold);
+float GetTotalTime(Characteristic* characteristic);
+float GetDeltaRising(Characteristic* characteristic);
+float GetDeltaFalling(Characteristic* characteristic);
 bool hasNewData();
 
-bool isCharacteristicUpdated();
-int32_t CalculateSetPoint(bool reset);
+bool isCharacteristicUpdated(Characteristic* characteristic);
+float CalculateSetPoint(bool reset, float measurement);
 
 #endif /* SRC_CHARACTERISTIC_H_ */

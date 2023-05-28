@@ -12,14 +12,14 @@ volatile Characteristic characteristic_new;
 
 void CharacteristicInit()
 {
-	characteristic.maximum_RPM = 30;
-	characteristic.baseRPM = 0;
-	characteristic.rise_time = 2;
-	characteristic.fall_time = 2;
+	characteristic.maximum_RPM = 69;
+	characteristic.baseRPM = 50;
+	characteristic.rise_time = 10;
+	characteristic.fall_time = 1;
 	characteristic.hold_time = 5;
-	characteristic.total_time = GetTotalTime();
-	characteristic.delta_rising = GetDeltaRising();
-	characteristic.delta_falling = GetDeltaFalling();
+	characteristic.total_time = GetTotalTime(&characteristic);
+	characteristic.delta_rising = GetDeltaRising(&characteristic);
+	characteristic.delta_falling = GetDeltaFalling(&characteristic);
 	characteristic.updated = false;
 	characteristic.startable = false;
 }
@@ -33,45 +33,51 @@ void SetCharacteristic(Characteristic* characteristic ,uint32_t max, uint32_t ba
 	characteristic->fall_time = fall;
 	characteristic->hold_time = hold;
 
-	characteristic->total_time = GetTotalTime();
-	characteristic->delta_rising = GetDeltaRising();
-	characteristic->delta_falling = GetDeltaFalling();
+	characteristic->total_time = rise + fall + hold;
+	characteristic->delta_rising = (max- base) / rise;
+	characteristic->delta_falling = (max-base)/fall;
 
 	characteristic->updated = true;
 }
 
-uint32_t GetTotalTime()
+float GetTotalTime(Characteristic* characteristic)
 {
-	return characteristic.rise_time + characteristic.fall_time + characteristic.hold_time;
+	return (characteristic->rise_time + characteristic->fall_time + characteristic->hold_time);
 }
-uint32_t GetDeltaRising()
+float GetDeltaRising(Characteristic* characteristic)
 {
-	return (characteristic.maximum_RPM - characteristic.baseRPM) / characteristic.rise_time;
-}
-
-uint32_t GetDeltaFalling()
-{
-	return (characteristic.maximum_RPM - characteristic.baseRPM) / characteristic.fall_time;
+	return ((characteristic->maximum_RPM - characteristic->baseRPM) / characteristic->rise_time);
 }
 
-bool isCharacteristicUpdated()
+float GetDeltaFalling(Characteristic* characteristic)
 {
-	bool retval = characteristic.updated;
-	if(characteristic.updated)
-		characteristic.updated = !characteristic.updated;
+	return ((characteristic->maximum_RPM - characteristic->baseRPM) / characteristic->fall_time);
+}
+
+bool isCharacteristicUpdated(Characteristic* characteristic)
+{
+	bool retval = characteristic->updated;
+	if(characteristic->updated)
+		characteristic->updated = !characteristic->updated;
 
 	return retval;
 }
 
-int32_t CalculateSetPoint(bool reset)
+float CalculateSetPoint(bool reset, float measurement)
 {
 	static uint32_t counter = 0;
 	static float setpoint = 0;
+	static bool base_rpm_flag = false;
 
-	if(reset || counter == 0)
+	if(reset || counter == 0 || !base_rpm_flag)
 	{
+		if(reset)
+			base_rpm_flag = false;
 		counter = 0;
 		setpoint = characteristic.baseRPM;
+		//if(characteristic.baseRPM)
+		if(fabs(characteristic.baseRPM - measurement) < 5)
+		base_rpm_flag = true;
 	}
 
 	else
@@ -96,12 +102,12 @@ int32_t CalculateSetPoint(bool reset)
 			}
 
 			else if((counter > PID_FREQ * (characteristic.rise_time + characteristic.hold_time)) &&
-					(counter <= GetTotalTime() * PID_FREQ))
+					(counter <= GetTotalTime(&characteristic) * PID_FREQ))
 						setpoint -= (characteristic.delta_falling/PID_FREQ);
 
 	}
 	counter++;
-	counter = counter % ((uint32_t)PID_FREQ* GetTotalTime());
+	counter = counter % ((uint32_t)PID_FREQ* (uint32_t)GetTotalTime(&characteristic));
 	return setpoint;
 
 }
@@ -109,4 +115,3 @@ int32_t CalculateSetPoint(bool reset)
 bool hasNewData(){
 	;
 }
-

@@ -98,9 +98,9 @@ int main(void)
   MX_SPI2_Init();
   MX_ADC1_Init();
   MX_TIM10_Init();
-  MX_USB_DEVICE_Init();
+  //MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-
+  //CDC_Init_FS();
   //InitAF();
   InitMotorPWM();
   InitEncoder();
@@ -126,10 +126,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(hasNewMessage())
+	  {
+		   ProcessReceivedData(rxBuffer, msg_length);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //CDC_Transmit_FS((uint8_t*) data, strlen(data));
+//	  CDC_Transmit_FS((uint8_t*) data, strlen(data));
+	  HAL_Delay(100);
+	  uint8_t data[] = "HELLO WORLD \r\n";
+
+	  //HAL_UART_Transmit (&huart2, data, sizeof (data), 10);
+
+
 //	  HAL_Delay(1000);
 ////	  if (rx_complete)
 ////	      {

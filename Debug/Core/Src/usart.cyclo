@@ -1,4 +1,6 @@
-usart.c:31:6:MX_USART2_UART_Init	2
-usart.c:62:6:HAL_UART_MspInit	2
-usart.c:92:6:HAL_UART_MspDeInit	2
-usart.c:116:6:HAL_UART_RxCpltCallback	2
+usart.c:34:6:MX_USART2_UART_Init	2
+usart.c:65:6:HAL_UART_MspInit	2
+usart.c:98:6:HAL_UART_MspDeInit	2
+usart.c:124:6:HAL_UART_RxCpltCallback	1
+usart.c:169:6:hasNewMessage	2
+usart.c:179:6:ProcessReceivedData	1

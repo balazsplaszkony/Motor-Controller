@@ -21,32 +21,58 @@ void PIDInit(){
 
 void PIDContollerUpdate(float measurement){
 
+
+
 	float error = PID.setpoint - measurement;
 
     float proportional = PID.Kp * error;
 
     PID.integral += PID.Ki * error;
 
-    // Limit the integral term to prevent windup
-    if (PID.integral > MAX_PID_OUTPUT) {
-    		PID.integral = MAX_PID_OUTPUT;
-        }
-    else if (PID.integral < MIN_PID_OUTPUT) {
-    		PID.integral = MIN_PID_OUTPUT;
-        }
-
     float derivative = PID.Kd * (error - PID.last_error);
 
-    PID.output = proportional + PID.integral + derivative;
+    if(PID.setpoint >= 0)
+    {
+        // Limit the integral term to prevent windup
+        if (PID.integral > MAX_PID_OUTPUT) {
+        		PID.integral = MAX_PID_OUTPUT;
+            }
+        else if (PID.integral < MIN_PID_OUTPUT) {
+        		PID.integral = MIN_PID_OUTPUT;
+            }
+        PID.output = proportional + PID.integral + derivative;
 
-    // Limit the output to within the allowable range
-    if (PID.output > MAX_PID_OUTPUT) {
-    	PID.output = MAX_PID_OUTPUT;
-      }
-    else if (PID.output < MIN_PID_OUTPUT) {
-    	PID.output = MIN_PID_OUTPUT;
-      }
-    PID.output += PID_OUTPUT_OFFSET;
+        // Limit the output to within the allowable range
+        if (PID.output > MAX_PID_OUTPUT) {
+        	PID.output = MAX_PID_OUTPUT;
+          }
+        else if (PID.output < MIN_PID_OUTPUT) {
+        	PID.output = MIN_PID_OUTPUT;
+          }
+        PID.output += PID_OUTPUT_OFFSET;
+
+    }
+
+    if(PID.setpoint < -0)
+        {
+            // Limit the integral term to prevent windup
+            if (PID.integral > MIN_PID_OUTPUT) {
+            		PID.integral = MIN_PID_OUTPUT;
+                }
+            else if (PID.integral < MAX_PID_OUTPUT_NEGATIVE) {
+            		PID.integral = MAX_PID_OUTPUT_NEGATIVE;
+                }
+            PID.output = proportional + PID.integral + derivative;
+
+            // Limit the output to within the allowable range
+            if (PID.output > MIN_PID_OUTPUT) {
+            	PID.output = MIN_PID_OUTPUT;
+              }
+            else if (PID.output < MAX_PID_OUTPUT_NEGATIVE) {
+            	PID.output = MAX_PID_OUTPUT_NEGATIVE;
+              }
+            PID.output = PID_OUTPUT_OFFSET + PID.output;
+        }
 
     PID.last_error = error;
 

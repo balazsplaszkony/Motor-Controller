@@ -1,2 +1,2 @@
 ../Core/Src/encoder.c:16:6:InitEncoder	72	static
-../Core/Src/encoder.c:85:9:HallEncoder_GetRPM	16	static
+../Core/Src/encoder.c:85:7:HallEncoder_GetRPM	16	static

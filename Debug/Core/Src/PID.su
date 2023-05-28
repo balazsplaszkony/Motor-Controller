@@ -1,4 +1,4 @@
 ../Core/Src/PID.c:10:6:PIDInit	4	static
 ../Core/Src/PID.c:22:6:PIDContollerUpdate	32	static
-../Core/Src/PID.c:56:10:RoundPIDOutput	32	static
-../Core/Src/PID.c:67:7:ScaleUpSetpoint	16	static
+../Core/Src/PID.c:82:10:RoundPIDOutput	32	static
+../Core/Src/PID.c:93:7:ScaleUpSetpoint	16	static

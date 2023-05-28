@@ -82,7 +82,7 @@ void InitEncoder()
 //
 //}
 
-int32_t HallEncoder_GetRPM()
+float HallEncoder_GetRPM()
 {
   int32_t counterValue = __HAL_TIM_GET_COUNTER(&Tim1Handle);
 

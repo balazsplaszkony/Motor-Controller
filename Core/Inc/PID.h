@@ -14,23 +14,25 @@
 #include "compontents.h"
 
 #define MAX_PID_OUTPUT 500
+#define MAX_PID_OUTPUT_NEGATIVE -500
+
 #define MIN_PID_OUTPUT 0
 #define PID_OUTPUT_OFFSET 500
 #define MAX_RPM 83 //üresjárásban ennyi
 
 
-typedef struct PidController{
+typedef struct PidController {
     float Kp;
     float Ki;
     float Kd;
     float setpoint;
     float integral;
     float last_error;
-    uint32_t output;
+    float output;
     bool updated;
-//    float min_output;
-//    float max_output;
-//    float output_offset;
+    //    float min_output;
+    //    float max_output;
+    //    float output_offset;
 } PidController;
 
 extern volatile PidController PID;

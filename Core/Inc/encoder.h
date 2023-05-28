@@ -13,7 +13,7 @@
 #include "main.h"
 
 void InitEncoder();
-int32_t HallEncoder_GetRPM();
+float HallEncoder_GetRPM();
 #endif /* INC_ENCODER_H_ */
 
 extern float rpm;

@@ -35,13 +35,22 @@ extern "C" {
 extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN Private defines */
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 256
+#define MESSAGE_DELIMITER '\n'
+// Global variables
 extern volatile uint8_t rxBuffer[BUFFER_SIZE];
+extern volatile uint32_t rxIndex;
+extern volatile uint32_t msg_length;
+
+extern volatile bool usartflag;
 /* USER CODE END Private defines */
 
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+bool hasNewMessage(void);
+void ProcessReceivedData(uint8_t* buffer, uint16_t length);
+
 
 /* USER CODE END Prototypes */
 

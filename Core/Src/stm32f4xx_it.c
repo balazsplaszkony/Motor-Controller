@@ -57,6 +57,7 @@
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern SPI_HandleTypeDef hspi2;
+extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -211,6 +212,59 @@ void SPI2_IRQHandler(void)
   /* USER CODE BEGIN SPI2_IRQn 1 */
 
   /* USER CODE END SPI2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART2 global interrupt.
+  */
+void USART2_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART2_IRQn 0 */
+	static int end_flag = 0;
+  /* USER CODE END USART2_IRQn 0 */
+  //HAL_UART_IRQHandler(&huart2);
+  /* USER CODE BEGIN USART2_IRQn 1 */
+	// Check if the interrupt was triggered by USART2
+	  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) != RESET)
+	  {
+	    // Clear the RXNE flag
+	    __HAL_UART_CLEAR_FLAG(&huart2, UART_FLAG_RXNE);
+
+	    // Read the received data from the data register
+	    uint8_t rxData = huart2.Instance->DR;
+
+	    if(!end_flag)
+	    {
+	    	 // Store the received data in the buffer
+	    		    rxBuffer[rxIndex++] = rxData;
+
+	    		    // Check if a complete message has arrived
+	    		    if (rxData == '\n')
+	    		    {
+	    		    	end_flag = 1;
+	    		      // Null-terminate the buffer
+	    		      rxBuffer[rxIndex] = '\0';
+
+	    		      // Set the message complete flag
+	    		      usartflag = true;
+
+	    		      // Reset the buffer index for the next message
+	    		      msg_length = rxIndex;
+	    		      rxIndex = 0;
+	    		    }
+	    		    else if (rxIndex >= BUFFER_SIZE - 1)
+	    		    {
+	    		      // Handle buffer overflow error
+	    		      rxIndex = 0;
+	    		    }
+	    }
+	    else{
+	    	end_flag = false;
+	    }
+
+	  }
+
+  /* USER CODE END USART2_IRQn 1 */
 }
 
 /**

@@ -22,6 +22,9 @@
 
 /* USER CODE BEGIN 0 */
 volatile uint8_t rxBuffer[BUFFER_SIZE];
+volatile uint32_t rxIndex = 0;
+volatile bool usartflag = false;
+volatile uint32_t msg_length = 0;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -83,6 +86,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* USART2 interrupt Init */
+    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspInit 1 */
 
   /* USER CODE END USART2_MspInit 1 */
@@ -106,6 +112,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     */
     HAL_GPIO_DeInit(GPIOA, USART_TX_Pin|USART_RX_Pin);
 
+    /* USART2 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(USART2_IRQn);
   /* USER CODE BEGIN USART2_MspDeInit 1 */
 
   /* USER CODE END USART2_MspDeInit 1 */
@@ -117,17 +125,69 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (huart == &huart2)
   {
-    static uint32_t rxIndex = 0;
-
-    // Copy received data into the buffer
-    rxBuffer[rxIndex++] = huart2.Instance->DR;
-
-    // Check if the buffer is full
-    if (rxIndex >= BUFFER_SIZE)
-    {
-      // Handle buffer overflow error
-      // ...
-    }
+//    // Copy received data into the buffer
+//    rxBuffer[rxIndex++] = huart2.Instance->DR;
+//
+//    // Check if the buffer is full
+//    if (rxIndex >= BUFFER_SIZE)
+//    {
+//      // Handle buffer overflow error
+//      // ...
+//    }
+//    HAL_UART_Transmit (&huart2, rxBuffer, rxIndex, 10);
   }
+}
+//
+//void USART2_IRQHandler(void)
+//{
+//  /* USER CODE BEGIN USART1_IRQn 0 */
+////    if ( USART1->ISR & UART_IT_TXE) {
+////
+////    }
+////
+////    if ( USART1->ISR & UART_IT_RXNE) {
+////        HAL_UART_Receive_IT(&huart1,rx_data,buff_size_rx);
+////        if(rx_data[pointer]=='\0') {
+////              pointer=0;
+////              readCommand(rx_data);
+////              clearBuffer(rx_data,buff_size_rx);
+////        } else {
+////          pointer++;
+////          if(pointer>=buff_size_rx) {
+////              pointer=0;
+////          }
+////        }
+////    }
+////    /* USER CODE END USART1_IRQn 0 */
+////    HAL_UART_IRQHandler(&huart1);
+////    /* USER CODE BEGIN USART1_IRQn 1 */
+////
+//
+//
+//  /* USER CODE END USART1_IRQn 1 */
+//}
+bool hasNewMessage(void)
+{
+  if (usartflag)
+  {
+    // Reset the message complete flag
+    usartflag = false;
+    return true;
+  }
+  return false;
+}
+void ProcessReceivedData(uint8_t* buffer, uint16_t length)
+{
+  // Parse and process the received data here
+  // Separate the numeric values (ints) and store them as needed
+  // You can use strtok or sscanf functions to parse the buffer
+
+  // Example: Assuming the received data format is "int1,int2,int3\n"
+  int base, top, rising, falling, hold;
+  sscanf((char*)buffer, "%d,%d,%d,%d,%d", &base, &top, &rising, &falling, &hold);
+  SetCharacteristic(&characteristic_new, top, base, rising, falling, hold);
+
+  // Use the parsed integer values as needed
+  // ...
 }
 /* USER CODE END 1 */
