@@ -8,7 +8,7 @@
 
 #include "display.h"
 
-volatile uint8_t Digits[2];
+ uint8_t Digits[2];
 
 void GetDigits(uint8_t number)
 {

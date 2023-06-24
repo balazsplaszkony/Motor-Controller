@@ -4,5 +4,4 @@ characteristic.c:43:7:GetTotalTime	1
 characteristic.c:47:7:GetDeltaRising	1
 characteristic.c:52:7:GetDeltaFalling	1
 characteristic.c:57:6:isCharacteristicUpdated	2
-characteristic.c:66:7:CalculateSetPoint	11
-characteristic.c:115:6:hasNewData	1
+characteristic.c:66:7:CalculateSetPoint	13

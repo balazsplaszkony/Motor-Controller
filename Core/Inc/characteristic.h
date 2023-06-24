@@ -9,9 +9,9 @@
 #define SRC_CHARACTERISTIC_H_
 #include <stdint.h>
 #include <stdbool.h>
+#include <math.h>
 #include "compontents.h"
 
-#define MOTOR_TIM7_FREQ				10000		// 100 us timer IT
 #define PID_FREQ 10.0
 
 typedef struct Characteristic {
@@ -28,8 +28,8 @@ typedef struct Characteristic {
 	bool startable;
 }Characteristic;
 
-extern volatile Characteristic characteristic;
-extern volatile Characteristic characteristic_new;
+extern Characteristic characteristic;
+extern Characteristic characteristic_new;
 
 
 void CharacteristicInit();

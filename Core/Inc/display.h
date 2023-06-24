@@ -12,7 +12,7 @@
 #include "spi.h"
 #include <stdbool.h>
 #include "compontents.h"
-extern volatile uint8_t asciiDigits[2];
+extern uint8_t asciiDigits[2];
 
 void GetDigits(uint8_t number);
 uint8_t convertTo7Segment(uint8_t value);

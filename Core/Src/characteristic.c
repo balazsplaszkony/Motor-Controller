@@ -7,16 +7,16 @@
 
 #include "characteristic.h"
 
-volatile Characteristic characteristic;
-volatile Characteristic characteristic_new;
+Characteristic characteristic;
+Characteristic characteristic_new;
 
 void CharacteristicInit()
 {
-	characteristic.maximum_RPM = 69;
-	characteristic.baseRPM = 50;
-	characteristic.rise_time = 10;
-	characteristic.fall_time = 1;
-	characteristic.hold_time = 5;
+	characteristic.maximum_RPM = 0;
+	characteristic.baseRPM = 0;
+	characteristic.rise_time = 0;
+	characteristic.fall_time = 0;
+	characteristic.hold_time = 0;
 	characteristic.total_time = GetTotalTime(&characteristic);
 	characteristic.delta_rising = GetDeltaRising(&characteristic);
 	characteristic.delta_falling = GetDeltaFalling(&characteristic);
@@ -71,12 +71,12 @@ float CalculateSetPoint(bool reset, float measurement)
 
 	if(reset || counter == 0 || !base_rpm_flag)
 	{
-		if(reset)
+		if(reset || counter == 0)
 			base_rpm_flag = false;
 		counter = 0;
 		setpoint = characteristic.baseRPM;
 		//if(characteristic.baseRPM)
-		if(fabs(characteristic.baseRPM - measurement) < 5)
+		if(abs((int)characteristic.baseRPM - (int)measurement) == 0)
 		base_rpm_flag = true;
 	}
 
@@ -107,11 +107,13 @@ float CalculateSetPoint(bool reset, float measurement)
 
 	}
 	counter++;
-	counter = counter % ((uint32_t)PID_FREQ* (uint32_t)GetTotalTime(&characteristic));
+	uint32_t total_time = (uint32_t)GetTotalTime(&characteristic);
+	if(total_time != 0)
+		counter = counter % ((uint32_t)PID_FREQ* total_time);
+
+	else
+		counter = 0;
 	return setpoint;
 
 }
 
-bool hasNewData(){
-	;
-}

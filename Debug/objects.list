@@ -16,7 +16,6 @@
 "./Core/Src/tim.o"
 "./Core/Src/timer.o"
 "./Core/Src/usart.o"
-"./Core/Src/usb.o"
 "./Core/Startup/startup_stm32f446retx.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o"

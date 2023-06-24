@@ -10,8 +10,8 @@ volatile PidController PID;
 void PIDInit(){
 
 	PID.Kd = 0.1;
-	PID.Ki = 2;
-	PID.Kp = 2;
+	PID.Ki = 2.5;
+	PID.Kp = 2.5;
 	PID.integral = 0.0;
 	PID.last_error = 0;
 	PID.output = 0;

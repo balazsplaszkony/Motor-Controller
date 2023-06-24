@@ -28,7 +28,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "usbd_cdc_if.h"
-#include "usb.h"
 #include <string.h>
 
 /* USER CODE END Includes */
@@ -119,7 +118,6 @@ int main(void)
   EnableDisplays(true);
 
 
-  //DisplayValue(88);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -133,43 +131,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  CDC_Transmit_FS((uint8_t*) data, strlen(data));
-	  HAL_Delay(100);
-	  uint8_t data[] = "HELLO WORLD \r\n";
 
-	  //HAL_UART_Transmit (&huart2, data, sizeof (data), 10);
-
-
-//	  HAL_Delay(1000);
-////	  if (rx_complete)
-////	      {
-////	        ProcessReceivedData(rx_buffer, rx_buffer_index);
-////	        rx_complete = 0;
-////	        rx_buffer_index = 0;
-////	      }
-//
-//	  static int i = 0;
-//
-//	  int a = HallEncoder_GetRPM();
-//	  if(i == 0)
-//		  DisplayValue(a);
-//
-//	  i++;
-//	  i = i % 100;
-
-
-//	  void ProcessReceivedData(void)
-//	  {
-//	    // Iterate over the received data in the buffer
-//	    for (uint32_t i = 0; i < BUFFER_SIZE; i++)
-//	    {
-//
-//	      // Process the received data
-//	      uint8_t data = rxBuffer[i];
-//	      // ...
-//	    }
-//	  }
-//	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

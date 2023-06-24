@@ -176,7 +176,7 @@ bool hasNewMessage(void)
   }
   return false;
 }
-void ProcessReceivedData(uint8_t* buffer, uint16_t length)
+void ProcessReceivedData(volatile uint8_t* buffer, volatile uint16_t length)
 {
   // Parse and process the received data here
   // Separate the numeric values (ints) and store them as needed

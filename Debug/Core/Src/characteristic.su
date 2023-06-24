@@ -4,5 +4,4 @@
 ../Core/Src/characteristic.c:47:7:GetDeltaRising	16	static
 ../Core/Src/characteristic.c:52:7:GetDeltaFalling	16	static
 ../Core/Src/characteristic.c:57:6:isCharacteristicUpdated	24	static
-../Core/Src/characteristic.c:66:7:CalculateSetPoint	24	static
-../Core/Src/characteristic.c:115:6:hasNewData	4	static
+../Core/Src/characteristic.c:66:7:CalculateSetPoint	32	static

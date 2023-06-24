@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart2;
@@ -49,7 +49,7 @@ void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 bool hasNewMessage(void);
-void ProcessReceivedData(uint8_t* buffer, uint16_t length);
+void ProcessReceivedData(volatile uint8_t* buffer, volatile uint16_t length);
 
 
 /* USER CODE END Prototypes */

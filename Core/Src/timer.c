@@ -43,9 +43,7 @@ void TIM7_IRQHandler(void)
 
 void TimerHandler()
 {
-//	static int zero_counter = 0;
-//	static int a = 0;
-	static int reset = 1;
+	static bool reset = true;
 	static float last_measurement = 0.0;
 	if(isCharacteristicUpdated(&characteristic_new))
 	{
@@ -53,20 +51,8 @@ void TimerHandler()
 		reset = 1;
 	}
 
-//	i++;
-//	DisplayValue(i);
-//
-
-//	if(i == 999)
-//	{
-//		a++;
-//		DisplayValue(a);
-//	}
-//	i++;
-//	i = i % 1000;
-
-
 	float measurement = HallEncoder_GetRPM();
+
 
 	if(measurement >= -0.0001 && measurement <= 0.0001)
 	{
@@ -74,68 +60,20 @@ void TimerHandler()
 		last_measurement = 0.0;
 	}
 
+	//This needs to be added because there are spikes in the encoder's signal
 	else if(fabs(measurement-last_measurement) > measurement && last_measurement != 0.0)
 		measurement = last_measurement;
 
-
-
 	DisplayValue(measurement);
+
+	PID.setpoint = CalculateSetPoint(reset, measurement);
+
 	if(reset)
-	{
-		PID.setpoint = CalculateSetPoint(reset, measurement);
-		reset = 0;
-	}
-	else{
-		PID.setpoint = CalculateSetPoint(reset, measurement);
-	}
+		reset = false;
 
-		PIDContollerUpdate(measurement);
-		SetPWM(PID.output);
+	PIDContollerUpdate(measurement);
+	SetPWM(PID.output);
 	last_measurement = measurement;
-
-//	static int a = 0;
-//	static int i = 0;
-//
-//
-////	if(abs((int)measurement) > 1000)
-////	{
-////		;
-////	}
-////	if(a == 0)
-////	{
-////		i++;
-////		DisplayValue(i);
-////	}
-//		//DisplayValue(measurement);
-//
-//	if(characteristic_new.updated)
-//	{
-//
-//		//if(prevbase != currentbase)
-//		//itt megvan még minden adatunk, mentsük lee
-//		//	elösször álljunk ba a basere
-//		 //uint32_t prev_baseRPM = characteristic.baseRPM ;
-//		 if((characteristic.baseRPM - measurement) > 3)
-//			 PID.setpoint = characteristic_new.baseRPM;
-//
-//		 else{
-//				//EZT MAJD VISSZAKELL ÍRNI KOMMENT NÉLKÜL
-//			 characteristic = characteristic_new;
-//			 PID.setpoint = CalculateSetPoint(1, measurement);
-//		 }
-//	}
-//	else{
-//		PID.setpoint = CalculateSetPoint(0, measurement);
-//	}
-//
-//
-//	PIDContollerUpdate(measurement);
-//	a++;
-//	a = a % 100;
-//	i = i% 100;
-//	//SetPWM(PID.output);
-
-
 }
 // Megszakításkezelő callback a Timer megszakításkezelőhöz
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
